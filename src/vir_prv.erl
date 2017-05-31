@@ -19,7 +19,6 @@ init(State) ->
             {deps, ?DEPS},
             {example, "rebar vir..."},
             {opts, [ {rerelease, $r, "rerelease", undefined, "Re-run the release and don't bump versions"},
-                     {zip, $z, "zip", undefined, "Use zip rather than tar for building packages"},
                      {version, $v, "version", binary, "Specify  the version number to use"},
                      {label, $l, "label", binary, "Specify the build label to use"}
                    ]},
@@ -149,13 +148,6 @@ os_cmd(Cmd) ->
 is_rerelease(State) ->
   {Args, _} = rebar_state:command_parsed_args(State),
   case proplists:get_value(rerelease, Args) of
-    undefined -> false;
-    _ -> true
-  end.
-
-use_zip(State) ->
-  {Args, _} = rebar_state:command_parsed_args(State),
-  case proplists:get_value(zip, Args) of
     undefined -> false;
     _ -> true
   end.
