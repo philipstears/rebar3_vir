@@ -5,7 +5,7 @@
 -export([init/1, do/1, format_error/1]).
 
 -define(PROVIDER, vir).
--define(DEPS, [release]).
+-define(DEPS, []).
 
 %% ===================================================================
 %% Public API
@@ -18,7 +18,7 @@ init(State) ->
             {bare, true},               % The task can be run by the user, always true
             {deps, ?DEPS},              % The list of dependencies
             {example, "rebar vir..."},  % How to use the plugin
-            {opts, []}                  % list of options understood by the plugin
+            {opts, []},                  % list of options understood by the plugin
             {short_desc, "Drop in replacement for vir"},
             {desc, ""}
     ]),
@@ -27,8 +27,8 @@ init(State) ->
 
 -spec do(rebar_state:t()) -> {ok, rebar_state:t()} | {error, string()}.
 do(State) ->
-  %% For now, just execute the bundled shell script..
-  os:cmd("priv/vir.sh -fd")
+  Result = os:cmd("_build/default/plugins/rebar3_vir/priv/vir release -rd"),
+  io_lib:format("~p", [Result]),
   {ok, State}.
 
 -spec format_error(any()) -> iolist().
