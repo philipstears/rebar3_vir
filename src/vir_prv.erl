@@ -22,10 +22,20 @@ init(State) ->
                      {version, $v, "version", binary, "Specify  the version number to use"},
                      {label, $l, "label", binary, "Specify the build label to use"}
                    ]},
-            {short_desc, "Drop in replacement for vir"},
-            {desc, ""}
+            {short_desc, short_desc()},
+            {desc, desc()}
     ]),
     {ok, rebar_state:add_provider(State, Provider)}.
+
+desc() ->
+    short_desc() ++ "\n"
+    "\n"
+    "This command will do tarred self-executing releases on a sensible operating system,"
+    "and zips on weird ones"
+    "\n".
+
+short_desc() ->
+    "Replacement for vir for our projects".
 
 
 -spec do(rebar_state:t()) -> {ok, rebar_state:t()} | {error, string()}.
@@ -93,7 +103,7 @@ build_packages(State) ->
   lists:foreach(fun (Release) ->
                     io:format("Packaging release ~p ~p~n", [ Release, BuildLabel ]),
                     Fullpath = filename:join("_build/default/rel/", Release),
-                    Result = os_cmd(string:join(["_build/default/plugins/rebar3_vir/priv/build_tar.sh", Fullpath, filename:absname("releases"), binary_to_list(BuildLabel)], " "))
+                    os_cmd(string:join(["_build/default/plugins/rebar3_vir/priv/build_tar.sh", Fullpath, filename:absname("releases"), binary_to_list(BuildLabel)], " "))
                 end, Releases),
   State.
 
