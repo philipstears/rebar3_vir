@@ -67,9 +67,9 @@ update_materials(State) ->
                           write_version("build_no", NewBuildNo),
                           write_version("major_ver", MajorVer),
                           write_version("minor_ver", MinorVer),
-                          list_to_binary(io_lib:format("~B.~B.~B-~s", [ MajorVer, MinorVer, NewBuildNo, binary_to_list(BranchName)]));
+                          list_to_binary(io_lib:format("v~B.~B.~B-~s", [ MajorVer, MinorVer, NewBuildNo, binary_to_list(BranchName)]));
                         { true, Version } ->
-                          list_to_binary(io_lib:format("~s-~s", [ binary_to_list(Version), binary_to_list(BranchName)]))
+                          list_to_binary(io_lib:format("v~s-~s", [ binary_to_list(Version), binary_to_list(BranchName)]))
                       end;
                     { true, Label } -> Label
                end,
