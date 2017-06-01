@@ -142,7 +142,7 @@ strip(Data) ->
 write_labels(Label) ->
   case filelib:is_file("apps/shared/include/version.hrl") of
     true ->
-      file:write_file("apps/shared/include/version.hrl", <<"-define(VERSION, <<\"", Label/binary, "\">>).">>);
+      file:write_file("apps/shared/include/version.hrl", <<"-define(VERSION, \"", Label/binary, "\").">>);
     _ ->
       ok
   end,
